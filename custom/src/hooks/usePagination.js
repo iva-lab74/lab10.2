@@ -12,9 +12,9 @@ export function usePagination(totalItems, itemsPerPage = 10, initialPage = 1) {
     //items on the page
     const itemsOnCurrentPage = endIndex - startIndex;
     //only above page 1 ever
-    const PrevPage = currentPage > 1;
+    const goPrevPage = currentPage > 1;
     // next button only untill the last total pages
-    const NextPage = currentPage < totalPages;
+    const goNextPage = currentPage < totalPages;
     // main function for jumping to a certain page 
     const setPage = (pageNumber) => {
         //guard
@@ -22,8 +22,9 @@ export function usePagination(totalItems, itemsPerPage = 10, initialPage = 1) {
         setCurrentPage(safePageNumber);
     };
 
-    
+    const nextPage = () => goNextPage && setCurrentPage((p) => p + 1);
+    const prevPage = () => goPrevPage && setCurrentPage((p) => p - 1);
 
     //call them so they can be used 
-    return { currentPage, totalPages, startIndex, endIndex, itemsOnCurrentPage };
+    return { currentPage, totalPages, startIndex, endIndex, itemsOnCurrentPage, setPage, prevPage, nextPage, goNextPage, goPrevPage, };
 }
