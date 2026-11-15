@@ -3,12 +3,12 @@
 import { usePagination } from "../hooks/usePagination";
 
 //building an array with fake data / start with index
-const items = Array.from({length: 123}, (_, i) => `Item ${i + 1}`);
+const items = Array.from({ length: 123 }, (_, i) => `Item ${i + 1}`);
 
 //is our hook working
 export default function PaginationDemo() {
 
-    const { currentPage, totalPages, startIndex, endIndex, itemsOnCurrentPage, 
+    const { currentPage, totalPages, startIndex, endIndex, itemsOnCurrentPage,
         setPage, nextPage, prevPage, goNextPage, goPrevPage, } = usePagination(items.length);
     //just the page iems
     const pageItems = items.slice(startIndex, endIndex);
@@ -26,8 +26,13 @@ export default function PaginationDemo() {
             <span>Page {currentPage} of {totalPages} </span>
 
             <button onClick={nextPage} disabled={!goNextPage}>Next</button>
-        
-        
+            <p>Showing items {startIndex + 1} = {endIndex} (Total on this page: {itemsOnCurrentPage})</p>
+
+            <p>Jump to: {Array.from({ length: totalPages }, (_, i) => (
+                <button key={i} onClick={() => setPage(i + 1)} disabled={i + 1 === currentPage}>{i + 1}</button>
+
+
+            ))}</p>
         </div>
-    )
+    );
 }
